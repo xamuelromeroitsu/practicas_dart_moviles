@@ -1,0 +1,13 @@
+# Archivos y carpetas generados por Dart
+.dart_tool/
+.packages
+build/
+.pub-cache/
+pubspec.lock
+
+# Archivos de configuración locales de VS Code
+.vscode/
+
+# Archivos temporales del sistema operativo (Windows/Mac)
+Thumbs.db
+.DS_Store
