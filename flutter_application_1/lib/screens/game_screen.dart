@@ -17,6 +17,7 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   final GameEngine _engine = GameEngine();
   late final AnimationController _ticker;
+  late final FocusNode _focusNode;  // Fixed: reuse same FocusNode
   OverlayEntry? _menuOverlay;
   AIDifficulty _selectedDifficulty = AIDifficulty.medium;
   bool _showMenu = true;
@@ -27,18 +28,20 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    _focusNode = FocusNode();  // Create once
     _engine.initialize();
     _ticker = AnimationController(vsync: this, duration: const Duration(milliseconds: 16))
       ..addListener(_gameLoop)
       ..repeat();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) _showMainMenu();
+      if (mounted) _focusNode.requestFocus();
     });
   }
 
   @override
   void dispose() {
     _ticker.dispose();
+    _focusNode.dispose();  // Dispose properly
     _menuOverlay?.remove();
     super.dispose();
   }
@@ -145,7 +148,7 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
   }
 
   void _returnToMainMenu() {
-    _ticker.stop();
+    _engine.togglePause();  // Pause game logic, keep ticker alive
     _menuOverlay?.remove();
     _menuOverlay = null;
     _showMenu = true;
@@ -159,7 +162,7 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
     final isMobile = MediaQuery.of(context).size.width < 600;
 
     return KeyboardListener(
-      focusNode: FocusNode()..requestFocus(),
+      focusNode: _focusNode,
       autofocus: true,
       onKeyEvent: _handleKeyEvent,
       child: Scaffold(

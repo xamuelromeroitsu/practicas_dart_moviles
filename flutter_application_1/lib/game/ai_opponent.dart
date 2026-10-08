@@ -81,7 +81,6 @@ class AIOpponent {
     
     // Predict Y position after framesToImpact
     double predictedY = ball.y + ball.dy * framesToImpact;
-    const ballRadius = 0.0; // Ball treated as point for prediction
     
     // Simulate bounces off top/bottom walls
     while (predictedY < 0 || predictedY > GameConfig.courtHeight) {
@@ -92,6 +91,6 @@ class AIOpponent {
       }
     }
 
-    return predictedY.clamp(0, GameConfig.courtHeight);
+    return predictedY.clamp(0.0, GameConfig.courtHeight);
   }
 }
