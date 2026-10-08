@@ -129,6 +129,7 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
       vsAI: mode == GameMode.pve,
       difficulty: mode == GameMode.pve ? _selectedDifficulty : null,
     );
+    if (!_engine.isPlaying) _engine.togglePause();  // Ensure game is running
   }
 
   void _handlePanUpdate(DragUpdateDetails details, bool isLeftPaddle) {
