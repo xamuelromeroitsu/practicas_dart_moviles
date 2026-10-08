@@ -46,6 +46,7 @@ class GameEngine {
     if (vsAI) {
       aiOpponent = AIOpponent(aiDifficulty);
     }
+    aiOpponent?.reset();
   }
 
   // Reset ball to center with random angle toward serving side
@@ -98,11 +99,13 @@ class GameEngine {
     if (ball.x < 0) {
       score2++;
       _resetBall(serveToLeft: false);       // Serve toward player 1
+      aiOpponent?.reset();
     } 
     // Scoring: ball passed right edge
     else if (ball.x > GameConfig.courtWidth) {
       score1++;
       _resetBall(serveToLeft: true);        // Serve toward player 2/AI
+      aiOpponent?.reset();
     }
 
     // Update AI if in single-player mode
@@ -147,5 +150,6 @@ class GameEngine {
     this.vsAI = vsAI;
     if (difficulty != null) aiDifficulty = difficulty;
     _resetGame();
+    aiOpponent?.reset();
   }
 }
