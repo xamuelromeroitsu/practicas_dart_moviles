@@ -172,62 +172,68 @@ class DifficultyTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
-        margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: isSelected ? _color.withValues(alpha: 0.2) : Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: isSelected ? _color : Colors.tealAccent.withValues(alpha: 0.3),
-            width: isSelected ? 2 : 1,
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        splashColor: _color.withValues(alpha: 0.2),
+        highlightColor: _color.withValues(alpha: 0.1),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          margin: const EdgeInsets.only(bottom: 12),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: isSelected ? _color.withValues(alpha: 0.2) : Colors.transparent,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: isSelected ? _color : Colors.tealAccent.withValues(alpha: 0.3),
+              width: isSelected ? 2 : 1,
+            ),
           ),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: isSelected ? _color : Colors.transparent,
-                border: Border.all(
-                  color: isSelected ? _color : Colors.tealAccent.withValues(alpha: 0.5),
-                  width: 2,
+          child: Row(
+            children: [
+              Container(
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: isSelected ? _color : Colors.transparent,
+                  border: Border.all(
+                    color: isSelected ? _color : Colors.tealAccent.withValues(alpha: 0.5),
+                    width: 2,
+                  ),
+                ),
+                child: isSelected
+                    ? const Icon(Icons.check, size: 16, color: Colors.black)
+                    : null,
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _label,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: isSelected ? _color : Colors.white,
+                        fontFamily: 'monospace',
+                      ),
+                    ),
+                    Text(
+                      _desc,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.tealAccent.withValues(alpha: 0.6),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: isSelected
-                  ? const Icon(Icons.check, size: 16, color: Colors.black)
-                  : null,
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    _label,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: isSelected ? _color : Colors.white,
-                      fontFamily: 'monospace',
-                    ),
-                  ),
-                  Text(
-                    _desc,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.tealAccent.withValues(alpha: 0.6),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

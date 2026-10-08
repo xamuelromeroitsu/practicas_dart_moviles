@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../widgets/game_painter.dart';
 import '../widgets/menu_overlay.dart';
+import '../widgets/back_to_menu_button.dart';
 import '../game/game_engine.dart';
 import '../game/ai_opponent.dart';
 import '../models/game_config.dart';
@@ -143,6 +144,16 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
     }
   }
 
+  void _returnToMainMenu() {
+    _ticker.stop();
+    _menuOverlay?.remove();
+    _menuOverlay = null;
+    _showMenu = true;
+    _pressedKeys.clear();
+    _engine.reset();
+    _showMainMenu();
+  }
+
   @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 600;
@@ -220,6 +231,18 @@ class _GameScreenState extends State<GameScreen> with TickerProviderStateMixin {
                     ],
                   );
                 },
+              ),
+
+            // Back to menu button (top-left) - only during gameplay
+            if (!_showMenu)
+              Positioned(
+                top: 20,
+                left: 20,
+                child: BackToMenuButton(
+                  onPressed: _returnToMainMenu,
+                  color: Colors.tealAccent,
+                  size: 48,
+                ),
               ),
 
             // Score
