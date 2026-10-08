@@ -18,6 +18,20 @@ class GameEngine {
 
   // Initialize all game objects
   void initialize() {
+    paddle1 = Paddle(
+      x: 0,
+      y: (GameConfig.courtHeight - GameConfig.paddleHeight) / 2,
+      width: GameConfig.paddleWidth,
+      height: GameConfig.paddleHeight,
+      speed: GameConfig.paddleSpeed,
+    );
+    paddle2 = Paddle(
+      x: GameConfig.courtWidth - GameConfig.paddleWidth,
+      y: (GameConfig.courtHeight - GameConfig.paddleHeight) / 2,
+      width: GameConfig.paddleWidth,
+      height: GameConfig.paddleHeight,
+      speed: GameConfig.paddleSpeed,
+    );
     _resetGame();
   }
 
